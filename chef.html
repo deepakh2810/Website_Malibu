@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+		<title>Restaurant HTML Template</title>
+
+		<!-- Google font -->
+		<link href="https://fonts.googleapis.com/css?family=Quicksand:400,700%7CCabin:400%7CDancing+Script" rel="stylesheet">
+
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+		<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+
+		<!-- Bootstrap -->
+		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
+
+		<!-- Owl Carousel -->
+		<link type="text/css" rel="stylesheet" href="css/owl.carousel.css" />
+		<link type="text/css" rel="stylesheet" href="css/owl.theme.default.css" />
+
+		<!-- Font Awesome Icon -->
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+
+		<!-- Custom stlylesheet -->
+		<link type="text/css" rel="stylesheet" href="css/style.css"/>
+
+		<!-- Rating stylesheet -->
+		<link type="text/css" rel="stylesheet" href="css/SimpleStarRating.css"/>
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    </head>
+    <body>
+				<!-- Header -->
+		<header id="header">
+
+			<!-- Top nav -->
+			<div id="top-nav">
+				<div class="container">
+
+				<!-- logo -->
+				<div class="logo">
+					<a href="index.html"><img src="./img/logo.png" alt="logo"></a>
+				</div>
+				<!-- logo -->
+
+				<!-- Mobile toggle -->
+				<button class="navbar-toggle">
+					<span></span>
+				</button>
+				<!-- Mobile toggle -->
+
+				<!-- social links -->
+				<ul class="social-nav">
+					<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+					<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+					<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+				</ul>
+				<!-- /social links -->
+
+				</div>
+			</div>
+			<!-- /Top nav -->
+
+			<!-- Bottom nav -->
+			<div id="bottom-nav">
+				<div class="container">
+				<nav id="nav">
+
+					<!-- nav -->
+					<ul class="main-nav nav navbar-nav">
+						<li><a href="#home" class="user_display">Welcome to Chef's Page</a></li>
+					</ul>
+					<!-- /nav -->
+
+					<!-- button nav -->
+					
+
+					<button class= " cta-nav main-button btn btn-sm" 
+						data-toggle = "modal" data-target = "#login-modal" id="signout">
+						Signout
+					</button>					
+					
+					<!-- button nav -->
+
+					<!-- contact nav -->
+					<ul class="contact-nav nav navbar-nav">
+						<li><a href="#"><i class="fa fa-phone"></i> 812-332-4334</a></li>
+						<li><a href="#"><i class="fa fa-map-marker"></i> 106 N Walnut St </a></li>
+					</ul>
+					<!-- contact nav -->
+
+				</nav>
+				</div>
+			</div>
+			<!-- /Bottom nav -->
+
+	
+		</header>
+		<!-- /Header -->
+
+		<div id="menu", class="section">
+			<!-- Backgound Image -->
+			<div class="bg-image bg-parallax overlay" style="background-image:url(./img/background01.jpg)"></div>
+			<!-- /Backgound Image -->
+			<div class="row">
+				<div class="section-header text-center">
+					<h4 class="sub-title">Discover</h4>
+					<h2 class="title white-text">Online Order</h2>
+				</div>
+				<div class="container">
+					<div id="chef-content">
+						<div id="past_orders"  class="tab-pane fade in">
+ 						</div>
+					</div>
+					<!-- end menucontent -->
+	
+
+				<div class="modal fade" id="myModal" role="dialog">
+					<div class="modal-dialog">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+							  <button type="button" class="close" data-dismiss="modal">&times;</button>
+							  <h4 class="modal-title" id="modal-title"></h4>
+							</div>
+							<!-- End modal header -->
+
+							<div class="modal-body content-newline" id="modal-body">
+							</div>
+							<!-- End modal body -->
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" id="deliver">Deliver</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
+							</div>
+							<!-- End modal footer/close -->
+						</div>
+						<!-- End modal content -->
+					</div>
+					<!-- End modal dialog -->
+				</div>
+				<!-- End of modal -->
+			</div>
+				<!-- /container -->
+			</div>	
+			<!-- row -->
+		</div>
+		<!-- menu -->
+
+		<!-- Preloader -->
+		<div id="preloader">
+			<div class="preloader">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		<!-- /Preloader -->
+
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+		<script type="text/javascript" src="js/google-map.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript" src="js/chef.js"></script>
+    </body>
+	
+	</html>

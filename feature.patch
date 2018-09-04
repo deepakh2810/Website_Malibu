@@ -1,0 +1,1282 @@
+commit c3d20fd916409e0c1d91bda88e784d499b18c3fc
+Author: Abhishek <abkanike@iu.edu>
+Date:   Tue Apr 24 11:10:08 2018 -0400
+
+    All feature support
+
+diff --git a/checkout.html b/checkout.html
+index ce27cec..79e2711 100644
+--- a/checkout.html
++++ b/checkout.html
+@@ -72,7 +72,7 @@
+ 						<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+ 
+ 							<!-- Checkout -->
+-							<div id="menu-content" class="tab-content">
++							<div id="menu-profile-content" class="tab-content">
+ 
+ 								<!-- menu1 -->
+ 								<div id="menu1" class="tab-pane fade in active">
+diff --git a/css/style.css b/css/style.css
+index 7ef549e..199b694 100755
+--- a/css/style.css
++++ b/css/style.css
+@@ -702,6 +702,12 @@ textarea.input {
+ 	background-color:#FFF;
+ }
+ 
++#menu-profile-content {
++	overflow:auto;
++	padding:30px 2% 30px;
++	background-color:#FFF;
++}
++
+ .single-dish + .single-dish {
+ 	margin-top:30px;
+ }
+@@ -1494,4 +1500,12 @@ textarea.input {
+ 
+ #past_orders ul:hover {
+ 	cursor: pointer;
++}
++
++#comment_abhi ul:hover {
++	cursor: pointer;
++}
++
++.red-error {
++	color: red;
+ }
+\ No newline at end of file
+diff --git a/index.html b/index.html
+index 7d60a75..3e45bb2 100644
+--- a/index.html
++++ b/index.html
+@@ -84,18 +84,16 @@
+ 						<li><a href="#about">About</a></li>
+ 						<li><a href="#menu">Menu</a></li>
+ 						<li><a href="#registration">Reservation</a></li>
++						<li><a href="#" id="order">Order</a></li>
+ 						<li><a href="#comments">Comments</a></li>
+-						<!-- <li><a href="#gallery">Galery</a></li> -->
+ 						<li><a href="#reply">Reply</a></li>
+ 						<li><a href="#contact">Contact</a></li>
+ 					</ul>
+ 					<!-- /nav -->
+ 
+ 					<!-- button nav -->
+-					
+-
+ 					<button class= " cta-nav main-button btn btn-sm" 
+-						data-toggle = "modal" data-target = "#login-modal" id="login-register">
++						data-toggle = "modal" id="login-register">
+ 						Login/Register
+ 					</button>					
+ 					
+@@ -132,7 +130,7 @@
+ 						<div class="modal-body">
+ 							<div class="tab-content">
+ 								<div id="login-form" class="tab-pane fade in active">
+-										<div id="wrong-credentials"></div>
++										<div id="wrong-credentials" class="red-error"></div>
+ 										<div class="form-group">
+ 											<label for="email">Email:</label>
+ 											<input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+@@ -147,6 +145,7 @@
+ 										<button class="btn btn-default main-button" id="login-submit">Login</button>
+ 								</div>
+ 								<div id="registration-form" class="tab-pane fade">
++										<div id="wrong-registration-credentials" class="red-error"></div>
+ 										<div class="form-group">
+ 											<label for="name">Your Name:</label>
+ 											<input type="text" class="form-control" id="name" placeholder="Enter your name" name="name">
+@@ -164,9 +163,6 @@
+ 
+ 							</div>
+ 						</div>
+-<!--                                    <div class="modal-footer">-->
+-<!--                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+-<!--                                    </div>-->
+ 					</div>
+ 				</div>
+ 			</div>
+@@ -350,7 +346,7 @@
+ 
+ 					<!-- reservation form -->
+ 					<div class="col-md-6 col-md-offset-1 col-sm-10 col-sm-offset-1">
+-						<form class="reserve-form row">
++						<div class="reserve-form row">
+ 							<div class="section-header text-center">
+ 								<h4 class="sub-title">Reservation</h4>
+ 								<h2 class="title white-text">Book Your Table</h2>
+@@ -363,11 +359,11 @@
+ 								</div>
+ 								<div class="form-group">
+ 									<label for="phone">Phone:</label>
+-									<input class="input" type="tel" placeholder="Phone" id="phone">
++									<input class="input" type="tel" placeholder="Phone" id="reg_phone">
+ 								</div>
+ 								<div class="form-group">
+ 									<label for="date">Date:</label>
+-									<input class="input" type="text" placeholder="MM/DD/YYYY" id="date">
++									<input class="input" type="text" placeholder="MM/DD/YYYY" id="reg_date">
+ 								</div>
+ 							</div>
+ 
+@@ -378,7 +374,7 @@
+ 								</div>
+ 								<div class="form-group">
+ 									<label for="number">Number of Guests:</label>
+-									<select class="input" id="number">
++									<select class="input" id="reg_number">
+ 										<option>1 Person</option>
+ 										<option>2 People</option>
+ 										<option>3 People</option>
+@@ -389,15 +385,15 @@
+ 								</div>
+ 								<div class="form-group">
+ 								  <label for="time">Time:</label>
+-								  <input class="input" type="text" placeholder="HH:MM" id="time">
++								  <input class="input" type="text" placeholder="HH:MM" id="reg_time">
+ 								</div>
+ 							</div>
+ 
+ 							<div class="col-md-12 text-center">
+-								<button class="main-button">Book Now</button>
++								<button class="main-button" id="reserve-now">Book Now</button>
+ 							</div>
+ 
+-						</form>
++						</div>
+ 					</div>
+ 					<!-- /reservation form -->
+ 
+@@ -450,6 +446,27 @@
+ 		</div>
+ 		<!-- /Reservation -->
+ 
++
++		<!-- Sample modal popup -->
++		<div class="modal fade" id="simpleInfo" role="dialog">
++			<div class="modal-dialog">
++			
++				<!-- Modal content-->
++				<div class="modal-content">
++					<div class="modal-header">
++						<button type="button" class="close" data-dismiss="modal">&times;</button>
++						<h4 class="modal-title" id="simpleInfo-title"></h4>
++					</div>
++					<div class="modal-body" id="simpleInfo-body">
++					</div>
++					<div class="modal-footer">
++						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
++					</div>
++				</div>
++			</div>
++		</div>
++		<!-- /Sample modal popup -->
++
+ 		<!-- Comments -->
+ 		<div id="comments" class="section">
+ 
+diff --git a/js/comment.js b/js/comment.js
+index 894acb2..b79b40b 100755
+--- a/js/comment.js
++++ b/js/comment.js
+@@ -24,12 +24,18 @@ $(document).ready(function(){
+ 
+ 	$("#add_comment").click(function() {
+ 		console.log("Clicked add_comment");
++		current_user_id = 1;
++		if (localStorage.getItem('user_id'))
++		{
++			current_user_id = localStorage.getItem('user_id');
++		}
+ 		var dataString = 
+ 		{
+ 			"name": $("#user_comment_name").val(),
+ 			"email": $("#user_comment_email").val(),
+ 			"message": $("#user_comment_message").val(),
+-			"rating": $("#user_comment_rating").val()
++			"rating": $("#user_comment_rating").val(),
++			"user_id": current_user_id
+ 		}
+ 
+ 		dataString = JSON.stringify(dataString);
+@@ -80,7 +86,7 @@ $(document).ready(function(){
+ 			ul.append('<li class="list-group-item" id="c_rating'+i+'">' + data + '</li>');
+ 			ul.append('<li class="list-group-item subject-overflow" id="c_message'+i+'">' + displayRecords[i].message + '</li>');
+ 			div.append(ul);
+-			$(div).click(function() {
++			$(ul).click(function() {
+ 				var elements = $(this).find("li");
+ 				// $(this).children('ul').each(function() {
+ 				// 	console.log("Clicked: " + $(this).html());
+@@ -123,33 +129,45 @@ $(document).ready(function(){
+ 		}
+ 	}
+ 
+-	function load_events() {
+-		$("#c0").click(function() {
+-			console.log("Clicked c0");
+-			$("#modal-title").html($("#c_user0").html()+"'s comment");
+-			$("#user_rating").html($("#c_rating0").html());
+-			$("#user_message").html($("#c_message0").html());
+-			console.log($("#c_message0").html());
+-			$("#myModal").modal();
+-		});
+-
+-		$("#c1").click(function() {
+-			console.log("Clicked c1");
+-			$("#modal-title").html($("#c_user1").html()+"'s comment");
+-			$("#user_rating").html($("#c_rating1").html());
+-			$("#user_message").html($("#c_message1").html());
+-			console.log($("#c_message1").html());
+-			$("#myModal").modal();
+-		});
++	$("#reserve-now").click(function() {		
++		user_id = 0;
++		if (localStorage.getItem("user_id")) {
++			user_id = localStorage.getItem("user_id");
++		}
++		console.log("Clicked reservation");
++		var reservation_details = 
++		{
++			"reg_name": $("#reg_name").val(),
++			"reg_phone": $("#reg_phone").val(),
++			"reg_date": $("#reg_date").val(),
++			"reg_email": $("#reg_email").val(),
++			"reg_number": $("#reg_number").val(),
++			"reg_time": $("#reg_time").val(),
++			"user_id": user_id
++		}
++		reservation_details = JSON.stringify(reservation_details);
+ 
+-		$("#c2").click(function() {
+-			console.log("Clicked c2");
+-			$("#modal-title").html($("#c_user2").html()+"'s comment");
+-			$("#user_rating").html($("#c_rating2").html());
+-			$("#user_message").html($("#c_message2").html());
+-			console.log($("#c_message2").html());
+-			$("#myModal").modal();
+-		});
++		$.ajax({
++			url: 'reservation.php',
++			data: {userData: reservation_details},
++			type: 'POST',
++			success: function(response) {
++				console.log("Reservation result: " + response);
++				if (response == "Success")
++				{
++					$("#simpleInfo-title").html("<h4>Information from Malibu Grill</h4>");
++					$("#simpleInfo-body").html("<p>Reservation successful!<p>");
++					$("#simpleInfo").modal();
++					
++					$("#reg_name").val('');
++					$("#reg_phone").val('');
++					$("#reg_date").val('');
++					$("#reg_email").val('');
++					$("#reg_number").val('');
++					$("#reg_time").val('');
++				}
++			}
++		});		
++	});
+ 
+-	}
+ });
+\ No newline at end of file
+diff --git a/js/login.js b/js/login.js
+index bc04d17..f6e6e3b 100644
+--- a/js/login.js
++++ b/js/login.js
+@@ -1,6 +1,4 @@
+ $(document).ready(function(){
+-
+-	
+ 	if (localStorage.getItem('user_id'))
+ 	{
+ 		console.log("Valid User ID");
+@@ -17,7 +15,8 @@ $(document).ready(function(){
+ 		console.log("User ID not equal to 1");
+ 	}
+ 
+-	$("#login-submit").click(function() {
++	function loginResponse(context)
++	{
+ 		var userCredentials = 
+ 		{
+ 			"email": $("#email").val(),
+@@ -35,10 +34,14 @@ $(document).ready(function(){
+ 				{
+ 					localStorage.setItem('user_id', response.user_id);
+ 					$("#login-register").removeAttr("data-toggle");
+-					$("#login-register").click(function() {
+-						window.location = "profile.html";
+-					});
++					if (context == "order")
++					{
++						window.location = "order.html";
++					}
++					else
++					{
+ 					window.location = "index.html";
++					}
+ 				}
+ 				else
+ 				{
+@@ -50,76 +53,86 @@ $(document).ready(function(){
+ 				console.log(localStorage.getItem('user_id'));
+ 			}
+ 		});		
+-	});
+ 
+-	
+-	
+-	//displayItems('lunch');
+-	
+-	/*
+-		display each subcategory for a given category.
+-	
+-	*/
+-	
+-	function displayItems(category) {
+-	
+-		var categoryItems = menu_items[category]; // { }
+-		console.log(menu_items);
+-		var subCategory_names = Object.keys(categoryItems); // 
+-		var subCatMenu = `<div id=` +`"` + category +`"` + `class="tab-pane fade in active">
+-			<div class="col-md-2">
+-				<div class="sidebar-nav">
+-					<div class="navbar navbar-default" role="navigation">
+-						<div class="navbar-collapse collapse sidebar-navbar-collapse">
+-							<ul class="nav navbar-nav">`
+-	
+-		for(var item in subCategory_names){
+-			subCatMenu += '<li id = "item' + item + '" ' + 'class = "active">' 
+-							+ '<a id = "sub-cat' + item + '" class = "dummy"> ' + 
+-							subCategory_names[item]  + '</a></li>';
++	}
++
++
++
++	function registerResponse(context)
++	{
++		console.log("call registerResponse");
++		var userCredentials = 
++		{
++			"name": $("#name").val(),
++			"email": $("#newemail").val(),
++			"pwd": $("#newpwd").val()
+ 		}
+-	
+-		subCatMenu += '</ul></div><!--/.nav-collapse --></div></div></div>';
+-		var subCatItems = getMenuItems(category, subCategory_names[0]); // default: select first category
+-		$('div#menu-content').prepend(subCatMenu + subCatItems);   
+-	   
++		userCredentials = JSON.stringify(userCredentials);
++		$.ajax({
++			url: 'register.php',
++			data: {userData: userCredentials},
++			dataType: 'json',
++			type: 'POST',
++			success: function(response) {
++				console.log("Login result: " + response.user_id);
++				if(response.user_id > 0)
++				{
++					console.log("inside true user_id");
++					localStorage.setItem('user_id', response.user_id);
++					$("#login-register").removeAttr("data-toggle");
++					if (context == "order")
++					{
++						window.location = "order.html";
++					}
++					else
++					{
++					window.location = "index.html";
++					}
++				}
++				else
++				{
++					localStorage.removeItem('user_id');
++					$("#login-register").attr("data-toggle", "modal");
++					$("#wrong-registration-credentials").html("User email account exists");
++					console.log("Error");
++				}
++				console.log(localStorage.getItem('user_id'));
++			}
++		});		
++
+ 	}
+-	
+-	/*
+-		returns the mark-up containing menu items
+-		of all given a category and subCategory
+-	
+-	*/
+-	
+-	function getMenuItems(category, subCategory) {
+-	
+-		console.log(category, subCategory);
+-		var active_menu = menu_items[category.trim()][subCategory.trim()]; //
+-		var menu_item = '<div class="col-md-5 dish-content">';
+-	
+-		console.log(active_menu);
+-		for(var item in active_menu) {
+-			if(active_menu.hasOwnProperty(item)) {
+-	
+-				dish = `<div class="single-dish">
+-					<div class="single-dish-heading">
+-						<h4 class="name">` + active_menu[item].name + `</h4>
+-							<h4 class="price">` + active_menu[item].cost + `
+-								<a class="fa fa-plus-circle addItem"></a>											
+-						</h4>
+-					</div>
+-					<p>` + active_menu[item].description + `</p>
+-				</div>`
+-	
+-				menu_item += dish;
+-	
+-			} 
++
++
++	$("#login-register").click(function() {
++		$("#login-modal").modal();
++
++		$("#login-submit").off();
++		$("#login-submit").click(function() {
++			loginResponse("login");
++		});
++
++		$("#registration-submit").click(function() {
++			registerResponse("login");
++		});
++	});
++
++	$("#order").click(function() {
++		if (localStorage.getItem("user_id"))
++		{
++			window.location = "order.html";
+ 		}
+-	
+-		menu_item += '</div>';
+-	
+-		return menu_item;
+-	
+-	}	
++		else
++		{
++			$("#login-modal").modal();
++
++			$("#login-submit").off();
++			$("#login-submit").click(function() {
++				loginResponse("order");
++			});
++			$("#registration-submit").click(function() {
++				registerResponse("login");
++			});
++		}
++	});
+ 
+-});
++});
+\ No newline at end of file
+diff --git a/js/main.js b/js/main.js
+index c9d0cdd..923717b 100644
+--- a/js/main.js
++++ b/js/main.js
+@@ -185,4 +185,3 @@ $("#reply").ready(function(){
+     }
+ });
+ 
+-
+diff --git a/js/orders.js b/js/orders.js
+index 9b5204c..143f972 100755
+--- a/js/orders.js
++++ b/js/orders.js
+@@ -469,4 +469,52 @@ $(document).ready(function() {
+         $($element).after(subCatItems);
+     });
+ 
+-});
+\ No newline at end of file
++
++});
++
++
++(function($) {
++    // Preloader
++    $(window).on('load', function() {
++        $("#preloader").delay(600).fadeOut();
++    });
++    
++    // Mobile Toggle Btn
++    $('.navbar-toggle').on('click',function(){
++        $('#header').toggleClass('nav-collapse');
++    });
++    
++    // Fixed Nav
++    $(window).on('scroll', function() {
++        var wScroll = $(this).scrollTop();
++        wScroll > $('.banner-area').height() ? $('#header').addClass('fixed') : $('#header').removeClass('fixed');
++    });
++    
++    // Banner Area Height
++    function bannerHeight () {
++        $('.banner-area').css({'paddingTop': $('#header').height() + 30});
++    }
++    $(window).on('resize', function() {
++        bannerHeight();
++    });
++    bannerHeight();
++    
++    // Galery Slider
++    $('#galery').owlCarousel({
++        items:2,
++        loop:true,
++        margin:0,
++        dots : false,
++        nav: true,
++        navText : ['<i class="fa fa-angle-left"></i>','<i class="fa fa-angle-right"></i>'],
++        autoplay : true,
++        responsive:{
++            0: {
++                items:1
++            },
++            992:{
++                items:2
++            }
++        }
++    });
++})(jQuery);
+diff --git a/js/profile.js b/js/profile.js
+new file mode 100644
+index 0000000..6989369
+--- /dev/null
++++ b/js/profile.js
+@@ -0,0 +1,138 @@
++$(document).ready(function(){
++	orderRecords = [],
++
++	$("#sign-out").click(function() {
++		window.location = "index.html";
++		// $("#login-register").html("Login/Register");
++		// $("#login-register").attr("data-toggle", "modal");
++		localStorage.removeItem('user_id');
++	});
++
++	var userInfo = 
++	{
++		"user_id": localStorage.getItem("user_id")
++	}
++	userInfo = JSON.stringify(userInfo);
++
++	console.log(userInfo);
++
++	$.ajax({
++		url: "profile_my_order.php",
++		data: {userData: userInfo},
++		async: true,
++		dataType: 'json',
++		type: 'POST',
++		success: function (data) {
++			orderRecords = data;
++			// console.log(orderRecords);
++			load_my_orders();
++		}
++	});
++
++	function load_my_orders()
++	{
++		$('#past_orders').html('');
++		console.log("Loading Profile My Orders");
++		// console.log(orderRecords);
++		for (var i=0; i<orderRecords.length; i++)
++		{
++			var div = $('<div class="col-sm-4"></div>');
++			var ul = $('<ul class="list-group my_order">');
++			// console.log(orderRecords[i].o_time);
++			var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
++			var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
++							"October", "November", "December"];
++			var date = new Date(orderRecords[i].o_time);
++			readable_date = days[date.getDay()] + " " + months[date.getMonth()] + "-" + date.getDate() + "-" + date.getFullYear()
++							+ " at " + date.getHours() + ":" + date.getMinutes();
++			ul.append('<li class="list-group-item" id="title"><h4>' + readable_date + '<h4></li>');
++		
++			var summary = JSON.parse(orderRecords[i].summary);
++			var inner_div = $('<div id="order_body"></div>')
++			for (iter=0;iter<summary.length;iter++) {
++				// console.log(summary[iter]);
++				summary_item_title = '<span class="summary-item-title">' + summary[iter].title + '</span>'
++				summary_item_count = '<span class="summary-item-count"> x' + summary[iter].count +'</span>'
++				summary_item_cost = '<span class="summary-item-cost"> $' + summary[iter].cost +'</span>'
++				element = '<li class="list-group-item no_border">' + summary_item_title + summary_item_count
++																   + summary_item_cost +'</li>';
++				inner_div.append(element);
++			}
++
++			grand_total = '<li class="list-group-item no_border"><span id="price-total">Total Price:</span><span id="price-display">$' 
++									+ orderRecords[i].total + '</span></li>'
++			inner_div.append(grand_total)
++			ul.append(inner_div);
++			div.append(ul);
++			console.log(i + ul);
++			$('#past_orders').append(div);
++
++			$(ul).click(function() {
++				var title = $(this).find("#title");
++				var order_body = $(this).find("#order_body");
++				console.log(title);
++				$("#modal-title").html($(title[0]).html());
++				$("#modal-body").html($(order_body[0]).html());
++				$("#myModal").modal();
++			});
++		}
++	}
++
++	$.ajax({
++		url: "profile_my_comments.php",
++		data: {userData: userInfo},
++		async: true,
++		dataType: 'json',
++		type: 'POST',
++		success: function (data) {
++			commentRecords = data;
++			// console.log(commentRecords);
++			load_my_comments();
++		}
++	});
++
++	function load_my_comments()
++	{
++		$("#past_comments").html('');
++		console.log("Loading Profile My Comments");
++
++		var div;
++		var ul;
++		console.log(commentRecords);
++		for (var i=0; i<commentRecords.length; i++)
++		{
++			div = $('<div class="col-sm-4 "><div/>');
++			ul = $('<ul class="list-group my_order"></ul>');
++
++			ul.append('<li class="list-group-item list-group-item-info no_border" id="title">' + commentRecords[i].username + '</li>');
++
++			var inner_div = $('<div id="comment_body"></div>')
++			var star;
++			var data = '';
++			for (star=0; star<commentRecords[i].rating; star++)
++			{
++				data += '<span class="fa fa-star checked"></span>';
++			}
++			for (; star<5; star++)
++			{
++				data += '<span class="fa fa-star"></span>';
++			}
++
++			inner_div.append('<li class="list-group-item no_border">' + data + '</li>');
++			inner_div.append('<li class="list-group-item no_border">' + commentRecords[i].message + '</li>');
++			ul.append(inner_div);
++			div.append(ul);
++			$("#past_comments").append(div);
++
++			$(ul).click(function() {
++				var title = $(this).find("#title");
++				var comment_body = $(this).find("#comment_body");
++				console.log(title);
++				$("#modal-title").html($(title[0]).html());
++				$("#modal-body").html($(comment_body[0]).html());
++				$("#myModal").modal();
++			});
++		}
++	}
++
++});
+\ No newline at end of file
+diff --git a/js/profile_my_order.js b/js/profile_my_order.js
+deleted file mode 100644
+index aa8f9a9..0000000
+--- a/js/profile_my_order.js
++++ /dev/null
+@@ -1,119 +0,0 @@
+-$(document).ready(function(){
+-	orderRecords = [],
+-
+-	$.ajax({
+-		url: "profile_my_order.php",
+-		async: true,
+-		dataType: 'json',
+-		success: function (data) {
+-			orderRecords = data;
+-			// console.log(orderRecords);
+-			load_my_orders();
+-		}
+-	});
+-
+-	function load_my_orders()
+-	{
+-		$('#past_orders').html('');
+-		console.log("Loading Profile My Orders");
+-		// console.log(orderRecords);
+-		for (var i=0; i<orderRecords.length; i++)
+-		{
+-			var div = $('<div class="col-sm-4"></div>');
+-			var ul = $('<ul class="list-group my_order">');
+-			// console.log(orderRecords[i].o_time);
+-			var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+-			var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+-							"October", "November", "December"];
+-			var date = new Date(orderRecords[i].o_time);
+-			readable_date = days[date.getDay()] + " " + months[date.getMonth()] + "-" + date.getDate() + "-" + date.getFullYear()
+-							+ " at " + date.getHours() + ":" + date.getMinutes();
+-			ul.append('<li class="list-group-item" id="title"><h4>' + readable_date + '<h4></li>');
+-		
+-			var summary = JSON.parse(orderRecords[i].summary);
+-			var inner_div = $('<div id="order_body"></div>')
+-			for (iter=0;iter<summary.length;iter++) {
+-				// console.log(summary[iter]);
+-				summary_item_title = '<span class="summary-item-title">' + summary[iter].title + '</span>'
+-				summary_item_count = '<span class="summary-item-count"> x' + summary[iter].count +'</span>'
+-				summary_item_cost = '<span class="summary-item-cost"> $' + summary[iter].cost +'</span>'
+-				element = '<li class="list-group-item no_border">' + summary_item_title + summary_item_count
+-																   + summary_item_cost +'</li>';
+-				inner_div.append(element);
+-			}
+-
+-			grand_total = '<li class="list-group-item no_border"><span id="price-total">Total Price:</span><span id="price-display">$' 
+-									+ orderRecords[i].total + '</span></li>'
+-			inner_div.append(grand_total)
+-			ul.append(inner_div);
+-			div.append(ul);
+-			console.log(i + ul);
+-			$('#past_orders').append(div);
+-
+-			$(ul).click(function() {
+-				var title = $(this).find("#title");
+-				var order_body = $(this).find("#order_body");
+-				console.log(title);
+-				$("#modal-title").html($(title[0]).html());
+-				$("#modal-body").html($(order_body[0]).html());
+-				$("#myModal").modal();
+-			});
+-		}
+-	}
+-
+-	$.ajax({
+-		url: "profile_my_comments.php",
+-		async: true,
+-		dataType: 'json',
+-		success: function (data) {
+-			commentRecords = data;
+-			// console.log(commentRecords);
+-			load_my_comments();
+-		}
+-	});
+-
+-	function load_my_comments()
+-	{
+-		$("#past_comments").html('');
+-		console.log("Loading Profile My Comments");
+-
+-		var div;
+-		var ul;
+-		console.log(commentRecords);
+-		for (var i=0; i<commentRecords.length; i++)
+-		{
+-			div = $('<div class="col-sm-4 "><div/>');
+-			ul = $('<ul class="list-group my_order"></ul>');
+-
+-			ul.append('<li class="list-group-item list-group-item-info no_border" id="title">' + commentRecords[i].username + '</li>');
+-
+-			var inner_div = $('<div id="comment_body"></div>')
+-			var star;
+-			var data = '';
+-			for (star=0; star<commentRecords[i].rating; star++)
+-			{
+-				data += '<span class="fa fa-star checked"></span>';
+-			}
+-			for (; star<5; star++)
+-			{
+-				data += '<span class="fa fa-star"></span>';
+-			}
+-
+-			inner_div.append('<li class="list-group-item no_border">' + data + '</li>');
+-			inner_div.append('<li class="list-group-item no_border">' + commentRecords[i].message + '</li>');
+-			ul.append(inner_div);
+-			div.append(ul);
+-			$("#past_comments").append(div);
+-
+-			$(ul).click(function() {
+-				var title = $(this).find("#title");
+-				var comment_body = $(this).find("#comment_body");
+-				console.log(title);
+-				$("#modal-title").html($(title[0]).html());
+-				$("#modal-body").html($(comment_body[0]).html());
+-				$("#myModal").modal();
+-			});
+-		}
+-	}
+-
+-});
+\ No newline at end of file
+diff --git a/load_comments.php b/load_comments.php
+index 25175a0..c0673ac 100755
+--- a/load_comments.php
++++ b/load_comments.php
+@@ -10,4 +10,6 @@ include "config.php";
+ 		array_push($rows, $row);
+ 	}
+ 	echo json_encode($rows);
++
++mysqli_close($con);
+ ?>
+\ No newline at end of file
+diff --git a/load_menu_item.php b/load_menu_item.php
+index 01942f8..df385e8 100644
+--- a/load_menu_item.php
++++ b/load_menu_item.php
+@@ -1,24 +1,13 @@
+ <?php
+-$servername = "localhost";
+-$username = "root";
+-$password = "admin";
+-$dbname = "resturantwebsite";
++include "config.php";
+ 
+ $menu_catgory = array('lunch','dinner', 'drinks', 'weekends');
+ $repsonse = array();
+ 
+-// Create connection
+-$conn = mysqli_connect($servername, $username, $password, $dbname);
+-// Check connection
+-if (!$conn) {
+-    die("Connection failed: " . mysqli_connect_error());
+-}
+-
+-
+ foreach($menu_catgory as $category) {
+     $sql = "SELECT * FROM menuitems where category= '$category'";
+ 
+-    $result = mysqli_query($conn, $sql);
++    $result = mysqli_query($con, $sql);
+     $sub_categories = array();
+     if (mysqli_num_rows($result) > 0) {
+     // output data of each row
+@@ -46,5 +35,5 @@ foreach($menu_catgory as $category) {
+ 
+ echo json_encode($repsonse);
+ 
+-mysqli_close($conn);
++mysqli_close($con);
+ ?>
+\ No newline at end of file
+diff --git a/login.php b/login.php
+index cf5094a..b2be89b 100644
+--- a/login.php
++++ b/login.php
+@@ -18,4 +18,6 @@ include "config.php";
+     }
+     $jsonUserInfo = json_encode($userInfo);
+ 	echo $jsonUserInfo;
++
++mysqli_close($con);
+ ?>
+\ No newline at end of file
+diff --git a/order.html b/order.html
+index d187b0c..b5d7b78 100755
+--- a/order.html
++++ b/order.html
+@@ -73,13 +73,14 @@
+ 		
+ 							<!-- nav -->
+ 							<ul class="main-nav nav navbar-nav">
+-								<li><a href="#">Home</a></li>
+-								<li><a href="#about">About</a></li>
+-								<li><a href="#menu">Menu</a></li>
+-								<li><a href="#reservation">Reservation</a></li>
+-								<li><a href="#gallery">Galery</a></li>
+-								<li><a href="#events">Events</a></li>
+-								<li><a href="#contact">Contact</a></li>												
++								<li><a href="index.html#home">Home</a></li>
++								<li><a href="index.html#about">About</a></li>
++								<li><a href="index.html#menu">Menu</a></li>
++								<li><a href="index.html#registration">Reservation</a></li>
++								<li><a href="order.html" id="order">Order</a></li>
++								<li><a href="index.html#comments">Comments</a></li>
++								<li><a href="index.html#reply">Reply</a></li>
++								<li><a href="index.html#contact">Contact</a></li>
+ 							</ul>
+ 							<!-- /nav -->
+ 							<!-- button nav -->
+@@ -88,9 +89,9 @@
+ 							</ul>-->
+ 		
+ 							<button class= " cta-nav main-button btn btn-sm" 
+-								data-toggle = "modal" data-target = "#login-modal">
++								data-toggle = "modal" id="login-register">
+ 								Login/Register
+-							</button>
++							</button>					
+ 							
+ 							
+ 							<!-- button nav -->
+@@ -163,12 +164,24 @@
+ 			</div>
+ 		</div>
+ 		<!-- /container -->
++
++		<!-- Preloader -->
++		<div id="preloader">
++			<div class="preloader">
++				<span></span>
++				<span></span>
++				<span></span>
++			</div>
++		</div>
++		<!-- /Preloader -->
++
+ 		<script type="text/javascript" src="js/jquery.min.js"></script>
+ 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+ 		<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+ 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+ 		<script type="text/javascript" src="js/google-map.js"></script>
+ 		<script type="text/javascript" src="js/orders.js"></script>
++    	<script type="text/javascript" src="js/login.js"></script>
+ 
+ 	</body>
+ </html>
+\ No newline at end of file
+diff --git a/profile.html b/profile.html
+index a0e1284..3506c37 100644
+--- a/profile.html
++++ b/profile.html
+@@ -75,32 +75,28 @@
+ 				<nav id="nav">
+ 
+ 					<!-- nav -->
++
+ 					<ul class="main-nav nav navbar-nav">
+ 						<li><a href="index.html#home">Home</a></li>
+ 						<li><a href="index.html#about">About</a></li>
+ 						<li><a href="index.html#menu">Menu</a></li>
+ 						<li><a href="index.html#registration">Reservation</a></li>
+-						<li><a href="index.html#gallery">Galery</a></li>
+-						<li><a href="index.html#events">Events</a></li>
++						<li><a href="order.html" id="order">Order</a></li>
++						<li><a href="index.html#comments">Comments</a></li>
++						<li><a href="index.html#reply">Reply</a></li>
+ 						<li><a href="index.html#contact">Contact</a></li>
+ 					</ul>
+ 					<!-- /nav -->
+ 
+ 					<!-- button nav -->
+-					
+-
+-					<button class= " cta-nav main-button btn btn-sm">Reserve</button>
+-					<button class= " cta-nav main-button btn btn-sm" 
+-						data-toggle = "modal" data-target = "#login-modal" id="login-register">
+-						Login/Register
++					<button class= " cta-nav main-button btn btn-sm" id="sign-out">Sign Out</button>
+ 					</button>					
+-					
+ 					<!-- button nav -->
+ 
+ 					<!-- contact nav -->
+ 					<ul class="contact-nav nav navbar-nav">
+-						<li><a href="#"><i class="fa fa-phone"></i> 045-548-14-97</a></li>
+-						<li><a href="#"><i class="fa fa-map-marker"></i> 3685 Granville Lane</a></li>
++						<li><a href="#"><i class="fa fa-phone"></i> 812-332-4334</a></li>
++						<li><a href="#"><i class="fa fa-map-marker"></i> 106 N Walnut St </a></li>
+ 					</ul>
+ 					<!-- contact nav -->
+ 
+@@ -113,59 +109,6 @@
+ 		</header>
+ 		<!-- /Header -->
+ 
+-<!-- 
+-		<div id = "login-modal" class="modal fade login-register-form" role="dialog">
+-			<div class="modal-dialog modal-dialog-centered">
+-				<div class="modal-content">
+-					<div class="modal-header">
+-						<button type="button" class="close" data-dismiss="modal">
+-							x
+-						</button>
+-						<ul class="nav nav-tabs">
+-							<li class="active"><a data-toggle="tab" href="#login-form"> Login <span class="glyphicon glyphicon-user"></span></a></li>
+-							<li><a data-toggle="tab" href="#registration-form"> Register <span class="glyphicon glyphicon-pencil"></span></a></li>
+-						</ul>
+-					</div>
+-					<div class="modal-body">
+-						<div class="tab-content">
+-							<div id="login-form" class="tab-pane fade in active">
+-									<div id="wrong-credentials"></div>
+-									<div class="form-group">
+-										<label for="email">Email:</label>
+-										<input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+-									</div>
+-									<div class="form-group">
+-										<label for="pwd">Password:</label>
+-										<input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+-									</div>
+-									<div class="checkbox">
+-										<label><input type="checkbox" name="remember"> Remember me</label>
+-									</div>
+-									<button class="btn btn-default main-button" id="login-submit">Login</button>
+-							</div>
+-							<div id="registration-form" class="tab-pane fade">
+-									<div class="form-group">
+-										<label for="name">Your Name:</label>
+-										<input type="text" class="form-control" id="name" placeholder="Enter your name" name="name">
+-									</div>
+-									<div class="form-group">
+-										<label for="newemail">Email:</label>
+-										<input type="email" class="form-control" id="newemail" placeholder="Enter new email" name="newemail">
+-									</div>
+-									<div class="form-group">
+-										<label for="newpwd">Password:</label>
+-										<input type="password" class="form-control" id="newpwd" placeholder="New password" name="newpwd">
+-									</div>
+-									<button class="btn btn-default main-button" id="registration-submit">Register</button>
+-							</div>
+-
+-						</div>
+-					</div>
+-				</div>
+-			</div>
+-		</div>
+- -->
+-
+ 		<div id="home" class="banner-area">
+ 			<div class="bg-image bg-parallax overlay" style="background-image:url(./img/background02.jpg)"></div>
+ 
+@@ -177,9 +120,9 @@
+ 					  <li><a data-toggle="tab" href="#past_comments">Past Comments</a></li>
+ 					</ul>
+ 
+-					<div id="menu-content" class="tab-content">
++					<div id="menu-profile-content" class="tab-content">
+ 
+-						<div id="info"  class="tab-pane fade in active">
++						<div id="info" class="tab-pane fade in active">
+ 
+ 							<div class="col-md-6">
+ 								<div class="form-group">
+@@ -276,38 +219,6 @@
+ 		</div>
+ 		<!-- End of home -->
+ 
+-
+-
+-		<!-- <div id="home" class="banner-area"> -->
+-
+-			<!-- Backgound Image -->
+-			<!-- <div class="bg-image bg-parallax overlay" style="background-image:url(./img/background02.jpg)"></div> -->
+-			<!-- /Backgound Image -->
+-
+-<!-- 			<div class="section-header text-center">
+-				<h4 class="sub-title">MY PROFILE</h4>
+-				<h2 class="title white-text">Profile Information</h2>
+-			</div>
+-
+-
+-			<div class="container">
+-				<div class="row">
+-
+-
+-					<div id="menu-content" class="tab-content">
+-
+-					</div>
+-
+-				</div>
+-			</div>
+- -->
+-<!-- 			<div id="menu-content" class="tab-content">
+-
+-			</div>
+- -->
+-		<!-- </div> -->
+-
+-
+ 		<!-- Footer -->
+ 		<footer id="footer">
+ 
+@@ -361,7 +272,7 @@
+ 		<!-- jQuery Plugins -->
+ 		<script type="text/javascript" src="js/jquery.min.js"></script>
+     	<script type="text/javascript" src="js/index.js"></script>
+-    	<script type="text/javascript" src="js/profile_my_order.js"></script>
++    	<script type="text/javascript" src="js/profile.js"></script>
+ 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+ 		<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+ 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+diff --git a/profile_my_comments.php b/profile_my_comments.php
+index 460ba6c..48164c8 100644
+--- a/profile_my_comments.php
++++ b/profile_my_comments.php
+@@ -1,6 +1,9 @@
+ <?php
+ include "config.php";
+-	$sql_query = "SELECT * from Ratings ORDER BY r_time DESC";
++
++	$obj = json_decode($_POST['userData']);
++
++	$sql_query = "SELECT * from Ratings WHERE user_id='$obj->user_id' ORDER BY r_time DESC";
+ 	$sth = mysqli_query($con,$sql_query);
+ 	$rows = array();
+ 
+@@ -8,7 +11,8 @@ include "config.php";
+ 		// $rows['root_name'] = $row;
+ 		array_push($rows, $row);
+ 	}
+-
+ 	// error_log(json_encode($rows));
+ 	echo json_encode($rows);
++
++mysqli_close($con);
+ ?>
+\ No newline at end of file
+diff --git a/profile_my_order.php b/profile_my_order.php
+index 419214c..bb93218 100644
+--- a/profile_my_order.php
++++ b/profile_my_order.php
+@@ -1,6 +1,9 @@
+ <?php
+ include "config.php";
+-	$sql_query = "SELECT * from ORDERS ORDER BY o_time DESC";
++
++	$obj = json_decode($_POST['userData']);
++
++	$sql_query = "SELECT * from ORDERS WHERE user_id='$obj->user_id' ORDER BY o_time DESC";
+ 	$sth = mysqli_query($con,$sql_query);
+ 	$rows = array();
+ 
+@@ -9,4 +12,6 @@ include "config.php";
+ 		array_push($rows, $row);
+ 	}
+ 	echo json_encode($rows);
++
++mysqli_close($con);
+ ?>
+\ No newline at end of file
+diff --git a/register.php b/register.php
+new file mode 100644
+index 0000000..2dcd36d
+--- /dev/null
++++ b/register.php
+@@ -0,0 +1,40 @@
++<?php
++include "config.php";
++
++	$obj = json_decode($_POST['userData']);
++    $sql_query = "select user_id from USERS where email='$obj->email'";
++
++    $result = mysqli_query($con,$sql_query);
++    $row = mysqli_fetch_array($result);
++
++    if ($row['user_id'])
++    {
++        error_log("Duplicate id");
++        $userInfo->user_id = 0;
++        $userInfo->first = "error";
++        // $jsonUserInfo = json_encode($userInfo);
++    }
++    else
++    {
++        error_log("New user id");
++
++        $sql_query = "SELECT MAX(user_id)+1 AS user_id from USERS";
++        $newid = mysqli_fetch_array(mysqli_query($con, $sql_query));
++
++        $sql_query = "INSERT INTO USERS (user_id, First, email, password)
++                    VALUES ('" . $newid['user_id'] ."', '$obj->name', '$obj->email', '$obj->pwd')";
++
++        if ($con->query($sql_query) === TRUE) {
++            $userInfo->user_id = $newid['user_id'];
++            $userInfo->first = $row['First'];
++            error_log("New user registered successfully");
++        }
++        else {
++            error_log("Query: " . $sql_query . "\nerror: " . $con->error);
++        }
++    }
++    $jsonUserInfo = json_encode($userInfo);
++	echo $jsonUserInfo;
++
++mysqli_close($con);
++?>
+\ No newline at end of file
+diff --git a/reservation.php b/reservation.php
+new file mode 100644
+index 0000000..3d06c69
+--- /dev/null
++++ b/reservation.php
+@@ -0,0 +1,21 @@
++<?php
++include "config.php";
++
++	$obj = json_decode($_POST['userData']);
++	// echo $obj;
++	$sql_query = "SELECT MAX(reserve_id)+1 AS reserve_id from RESERVATIONS";
++	$newid = mysqli_fetch_array(mysqli_query($con, $sql_query));
++
++	$sql_query = "INSERT INTO RESERVATIONS (reserve_id, name, email, phone, guests, date, time, user_id)
++					VALUES ('". $newid['reserve_id'] ."', '$obj->reg_name', '$obj->reg_email', '$obj->reg_phone'".
++													    ",'$obj->reg_number', '$obj->reg_date', '$obj->reg_time', '$obj->user_id')";
++
++	if ($con->query($sql_query) === TRUE) {
++	    error_log("New reservation is created successfully");
++		echo "Success";
++	} else {
++	    error_log("Query: " . $sql_query . "\nerror: " . $con->error);
++		echo "Problem with reservation details";
++	}
++
++?>
+\ No newline at end of file
+diff --git a/save_comment.php b/save_comment.php
+index c8d97f8..a1b7752 100755
+--- a/save_comment.php
++++ b/save_comment.php
+@@ -6,8 +6,9 @@ include "config.php";
+ 	$sql_query = "SELECT MAX(rating_id)+1 AS rating_id from Ratings";
+ 	$newid = mysqli_fetch_array(mysqli_query($con, $sql_query));
+ 
+-	$sql_query = "INSERT INTO Ratings (rating_id, message, username, r_time, rating)
+-					VALUES ('". $newid['rating_id'] ."', '"  . $obj->message . "', '" . $obj->name . "', Now(), '" . $obj->rating ."')";
++	$sql_query = "INSERT INTO Ratings (rating_id, message, username, r_time, rating, user_id)
++					VALUES ('". $newid['rating_id'] ."', '"  . $obj->message . "', '" . $obj->name . "', Now(), '" . $obj->rating ."', '"
++								. $obj->user_id . "')";
+ 	// $sth = mysqli_query($con,$sql_query);
+ 
+ 
+@@ -18,4 +19,6 @@ include "config.php";
+ 	}
+ 
+ 	echo "Inserted";
++
++mysqli_close($con);
+ ?>
+\ No newline at end of file
+diff --git a/save_order.php b/save_order.php
+index 1018049..eb014dc 100644
+--- a/save_order.php
++++ b/save_order.php
+@@ -8,8 +8,6 @@ include "config.php";
+ 
+ 	$sql_query = "INSERT INTO ORDERS (order_id, summary, total, user_id, o_time, firstname, address, phone)
+ 					VALUES ('". $newid['order_id'] ."', '"  . $obj->summary . "', '" . $obj->total . "', '" . 3 . "', NOW(), '" . $obj->name . "', '" . $obj->address . "', '" . $obj->phone . "')";
+-	// $sth = mysqli_query($con,$sql_query);
+-
+ 
+ 	if ($con->query($sql_query) === TRUE) {
+ 	    error_log("New record in order table created successfully");
+@@ -18,4 +16,6 @@ include "config.php";
+ 	}
+ 
+ 	echo "Inserted";
++
++mysqli_close($con);
+ ?>
+\ No newline at end of file

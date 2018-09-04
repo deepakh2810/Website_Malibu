@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+			<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+		<title>Restaurant HTML Template</title>
+
+		<!-- Google font -->
+		<link href="https://fonts.googleapis.com/css?family=Quicksand:400,700%7CCabin:400%7CDancing+Script" rel="stylesheet">
+
+		<!-- Bootstrap -->
+		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
+
+		<!-- Owl Carousel -->
+		<link type="text/css" rel="stylesheet" href="css/owl.carousel.css" />
+		<link type="text/css" rel="stylesheet" href="css/owl.theme.default.css" />
+
+		<!-- Font Awesome Icon -->
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+
+		<!-- Custom stylesheet -->
+		<link type="text/css" rel="stylesheet" href="css/style.css"/>
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+	</head>
+	
+	<body>
+
+
+			<header id="header">
+
+					<!-- Top nav -->
+					<div id="top-nav">
+						<div class="container">
+		
+						<!-- logo -->
+						<div class="logo">
+							<a href="index.html"><img src="./img/logo.png" alt="logo"></a>
+						</div>
+						<!-- logo -->
+		
+						<!-- Mobile toggle -->
+						<button class="navbar-toggle">
+							<span></span>
+						</button>
+						<!-- Mobile toggle -->
+		
+						<!-- social links -->
+						<ul class="social-nav">
+							<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+							<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+							<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+						</ul>
+						<!-- /social links -->
+		
+						</div>	
+					</div>
+					<!-- /Top nav -->
+		
+					<!-- Bottom nav -->
+					<div id="bottom-nav">
+						<div class="container">
+						<nav id="nav">
+		
+							<!-- nav -->
+							<ul class="main-nav nav navbar-nav">
+								<li><a href="index.html#home">Home</a></li>
+								<li><a href="index.html#about">About</a></li>
+								<li><a href="index.html#menu">Menu</a></li>
+								<li><a href="index.html#registration">Reservation</a></li>
+								<li><a href="order.html" id="order">Order</a></li>
+								<li><a href="index.html#comments">Comments</a></li>
+								<li><a href="index.html#reply">Reply</a></li>
+								<li><a href="index.html#contact">Contact</a></li>
+							</ul>
+							<!-- /nav -->
+							<!-- button nav -->
+							<!--<ul class="cta-nav">
+								<li><a href="#" class="main-button">Reserve</a></li>
+							</ul>-->
+		
+							<button class= " cta-nav main-button btn btn-sm" 
+								data-toggle = "modal" id="login-register">
+								Login/Register
+							</button>					
+							
+							
+							<!-- button nav -->
+		
+							<!-- contact nav -->
+							<ul class="contact-nav nav navbar-nav">
+								<li><a href="#"><i class="fa fa-phone"></i> 812-332-4334</a></li>
+								<li><a href="#"><i class="fa fa-map-marker"></i> 106 N Walnut St </a></li>
+							</ul>
+							<!-- contact nav -->
+		
+						</nav>
+						</div>
+					</div>
+					<!-- /Bottom nav -->
+		
+		
+				</header>
+		<div id="menu" class="section">
+
+			<!-- Backgound Image -->
+			<div class="bg-image bg-parallax overlay" style="background-image:url(./img/background01.jpg)"></div>
+			<!-- /Backgound Image -->
+
+			<!-- container -->
+			<div class="container">
+
+				<!-- row -->
+				<div class="row">
+
+					<div class="section-header text-center">
+						<h4 class="sub-title">Discover</h4>
+						<h2 class="title white-text">Online Order</h2>
+					</div>
+
+					<!-- menu nav -->
+					<ul class="menu-nav">
+					  <li class="active"><a data-toggle="tab" id="lunch">Lunch</a></li>
+					  <li><a data-toggle="tab" id="dinner">Dinner</a></li>
+					  <li><a data-toggle="tab" id="drinks">Drinks</a></li>
+					</ul>
+					<!-- /menu nav -->
+					<!-- menu content -->
+					<div id="menu-content" class="tab-content">
+						<div class="col-md-5">
+							<div id= "order-card" class="card" hidden>
+								<div class="card-body">
+									<div class = "shopping-cart">
+										<i class="fa fa-shopping-cart"></i>
+										<span class = "order-text"> MY ORDER</span>
+									</div>
+									<ul id = "order-summary" class="list-group list-group-flush">
+									</ul>
+									<div class="card-body">
+										<button id = "clear-cart" class="btn btn-danger" style = "margin-right:65px; float: left;">
+											Clear Order
+										</button>
+										<button id = "checkout" class="btn btn-success" style="float: right;">
+											Check Out
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /menu content -->
+				</div>
+				<!-- /row -->
+			</div>
+		</div>
+		<!-- /container -->
+
+		<!-- Preloader -->
+		<div id="preloader">
+			<div class="preloader">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		<!-- /Preloader -->
+
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+		<script type="text/javascript" src="js/google-map.js"></script>
+		<script type="text/javascript" src="js/orders.js"></script>
+    	<script type="text/javascript" src="js/login.js"></script>
+
+	</body>
+</html>
