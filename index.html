@@ -466,6 +466,104 @@
 		</div>
 		<!-- /Sample modal popup -->
 
+		<!-- Comments -->
+		<div id="comments" class="section">
+
+			<!-- Backgound Image -->
+			<div class="bg-image bg-parallax overlay" style="background-image:url(./img/background02.jpg)"></div>
+			<!-- <div class="bg-image" style="background-image:url(./img/background02.jpg)"></div> -->
+			<!-- /Backgound Image -->
+
+			<!-- container -->
+			<div class="container">
+
+				<!-- row -->
+				<div class="row">
+
+					<div class="section-header text-center">
+						<h4 class="sub-title">Review and Ratings</h4>
+						<h2 class="title white-text">Comments</h2>
+					</div>
+			
+					<div class="row">
+						<div id="comment_abhi"></div>
+					</div>
+					<!-- Modal -->
+					<div class="modal fade" id="myModal" role="dialog">
+						<div class="modal-dialog">
+
+							<!-- Modal content-->
+							<div class="modal-content">
+								<div class="modal-header">
+								  <button type="button" class="close" data-dismiss="modal">&times;</button>
+								  <h4 class="modal-title" id="modal-title"></h4>
+								</div>
+								<!-- End modal header -->
+
+								<div class="modal-body" id="modal-body">
+									<h3> Rating: </h3>
+									<div id="user_rating"> </div>
+									<br/>
+									<h3> Review: </h3>
+									<div id="user_message" class="content-newline"> </div>
+								</div>
+								<!-- End modal body -->
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</div>
+								<!-- End modal footer/close -->
+							</div>
+							<!-- End modal content -->
+						</div>
+						<!-- End modal dialog -->
+					</div>
+
+					<!-- Pagination -->
+					<div id="pager" style="text-align:center;">
+					      <ul id="pagination" class="pagination-sm"></ul>
+					</div>
+					<!-- End of Pagination -->
+
+				</div>
+				<!-- /row -->
+
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /Comments -->
+
+		<!-- Reply -->
+		<div id="reply" class="section">
+
+			<!-- container -->
+			<div class="container">
+
+				<!-- row -->
+				<div class="row">
+
+					<div class="blog-reply-form col-md-8 col-md-offset-3">
+						<h3 class="title">Leave a Reply</h3>
+						<input class="input" placeholder="Name" type="text" id="user_comment_name">
+						<input class="input" placeholder="Email" type="email" id="user_comment_email">
+						<div class="rate">
+							<span>Rating: &nbsp;&nbsp;</span>
+								<span class="rating big-red"></span>
+								<input type="hidden" name="rating" id="user_comment_rating">
+							</div>
+						<textarea class="input" placeholder="Message" id="user_comment_message"></textarea>
+						<button class="main-button" id="add_comment">Submit</button></li>
+					</div>
+
+				</div>
+				<!-- /row -->
+
+			</div>
+			<!-- /container -->
+
+		</div>
+		<!-- /Reply -->
+
 		<!-- Contact -->
 		<div id="contact" class="section">
 
